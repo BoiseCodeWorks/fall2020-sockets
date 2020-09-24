@@ -1,8 +1,6 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <router-link class="navbar-brand" :to="{ name: 'home' }"
-      >Kanban</router-link
-    >
+    <router-link class="navbar-brand" :to="{ name: 'home' }">V-Bay</router-link>
     <button
       class="navbar-toggler"
       type="button"

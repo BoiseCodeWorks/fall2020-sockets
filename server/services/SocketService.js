@@ -71,18 +71,13 @@ class SocketService {
       socket.on("disconnect", this._onDisconnect(socket));
     };
   }
-
-  _onDisconnect(socket) {
-    return () => {
-      try {
-        if (!socket.user) {
-          return;
-        }
-        this.io.emit("UserDisconnected", socket.user.id);
-      } catch (e) { }
-    };
+  _newConnection(socket) {
+    //Handshake / Confirmation of Connection
+    socket.emit("CONNECTED", {
+      socket: socket.id,
+      message: "Successfully Connected"
+    });
   }
-
   _onDispatch(socket) {
     return (payload = {}) => {
       try {
@@ -94,14 +89,17 @@ class SocketService {
       } catch (e) { }
     };
   }
-
-  _newConnection(socket) {
-    //Handshake / Confirmation of Connection
-    socket.emit("CONNECTED", {
-      socket: socket.id,
-      message: "Successfully Connected"
-    });
+  _onDisconnect(socket) {
+    return () => {
+      try {
+        if (!socket.user) {
+          return;
+        }
+        this.io.emit("UserDisconnected", socket.user.id);
+      } catch (e) { }
+    };
   }
+
 }
 
 const socketService = new SocketService();

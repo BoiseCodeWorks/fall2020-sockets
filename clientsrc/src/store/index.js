@@ -2,8 +2,8 @@ import { STATES } from 'mongoose'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import router from '../router/index'
-import { api } from "./AxiosService"
-import { socketStore } from "./socketStore"
+import { api } from "../services/AxiosService"
+import { socketService } from "../services/socketService"
 Vue.use(Vuex)
 
 
@@ -50,7 +50,6 @@ export default new Vuex.Store({
     //#endregion
     async createShip({ commit, state }, shipData) {
       let res = await api.post("/ships", shipData)
-      // commit("addShip", res.data)
     },
     async getShips({ commit }) {
       let res = await api.get("/ships")
@@ -62,7 +61,6 @@ export default new Vuex.Store({
     },
     async bid({ commit }, shipData) {
       let res = await api.put("/ships/" + shipData.id, shipData)
-      commit("setActive", res.data)
     },
     async removeShip({ commit }, id) {
       await api.delete("/ships/" + id)
@@ -70,6 +68,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
-    socketStore
+    socketService
   }
 })
